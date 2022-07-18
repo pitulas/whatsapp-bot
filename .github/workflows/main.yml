@@ -1,0 +1,45 @@
+on: 
+  push:
+    branches:
+      - production
+  
+name: 🚀 Deploy website on trialnode.appmerdeka.com
+jobs:
+  web-deploy:
+    name: 🎉 Deploy
+    runs-on: ubuntu-latest
+    steps:
+    - name: 🚚 Get latest code
+      uses: actions/checkout@v2
+    
+    - name: 📂 Sync files
+      uses: SamKirkland/FTP-Deploy-Action@4.3.0
+      with:
+        server: ${{ secrets.FTP_SERVER }}
+        username: ${{ secrets.FTP_USERNAME }}
+        password: ${{ secrets.FTP_PASSWORD }}
+        server-dir: ${{ secrets.SERVER_DIR }}
+        
+# name: Deploy To rppsaroja.appmerdeka.com
+
+# on:
+#   # Triggers the workflow on push or pull request events but only for the "master" branch
+#   push:
+#     branches: 
+#     - master
+
+# jobs:
+#   FTP-Deploy-Action:
+#     name: FTP-Deploy-Action
+#     runs-on: ubuntu-latest
+
+#     steps:
+#       - uses: actions/checkout@v3
+#         with: 
+#           fetch-depth: 2
+#       - name: FTP-Deploy-Action
+#         uses: Samkirkland/FTP-Deploy-Action@3.1.1
+#         with: 
+#           ftp-server: ${{ secrets.FTP_SERVER }}
+#           ftp-username: ${{ secrets.FTP_USERNAME }}
+#           ftp-password: ${{ secrets.FTP_PASSWORD }}
